@@ -13,6 +13,7 @@ public class Pop3
     String pass="";
     int c=13,d=10;
     SSLSocket s;
+    String a;
     BufferedReader br;
     BufferedWriter bw;
     String temp="";
@@ -23,12 +24,12 @@ public class Pop3
         //System.out.print("Enter pop3 server :");
 
        // connectAndRetreiveEmail(bri.readLine());
-        connectAndRetreiveEmail("pop.mail.ru");
+       // connectAndRetreiveEmail(a);
     }
 
 
 
-    private void connectAndRetreiveEmail(String strPOP3Server) throws Exception
+    public void connectAndRetreiveEmail(String strPOP3Server) throws Exception
     {      SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();
             s =null;
             s = (SSLSocket) ssf.createSocket(strPOP3Server,995);
@@ -96,10 +97,10 @@ public class Pop3
         System.out.println("\t\t\t\t--------------");
         System.out.print("Please Enter User Name : ");
         //user=bri.readLine();
-        user = "testaipos@mail.ru";
+       // user = "testaipos@mail.ru";
         System.out.print("Please Enter password : ");
        // pass=bri.readLine();
-        pass = "kolb2018";
+       // pass = "kolb2018";
         //System.out.println();
         bw.write("User "+user+"\n\r");
         bw.flush();
@@ -179,56 +180,32 @@ public class Pop3
             }
         System.out.println(temp);
         System.out.println(builder);
-        chek();
+        Parser parser = new Parser();
+        parser.parsing(builder);
 
     }
 
     private void quit() throws Exception
     {
         System.out.println("Quiting and saving changes to Inbox ....");
-        bw.write("uidl 3\n\r");
+        bw.write("quit\n\r");
         bw.flush();
         System.out.println(br.readLine());
     }
 
-    public static void main(String args[]) throws Exception
-    {
-        new Pop3();
-    }
-    public void chek(){
 
 
-        Pattern p = Pattern.compile("Delivered-To: \\w+@\\w+.\\w+");
-        Matcher m = p.matcher(builder);
-        m.find();
-        System.out.println(builder.substring(m.start(),m.end()));
-        p = Pattern.compile("Return-path: \\<\\w+@\\w+.\\w+\\>");
-        m = p.matcher(builder);
-        m.find();
-        System.out.println(builder.substring(m.start(),m.end()));
-        p = Pattern.compile("\\d\\d \\w+ \\d\\d\\d\\d\\ \\d\\d:\\d\\d:\\d\\d");
-        m = p.matcher(builder);
-        m.find();
-        System.out.println(builder.substring(m.start(),m.end()));
-
-        p = Pattern.compile("Subject: \\w*\\s*");
-        m = p.matcher(builder);
-        m.find();
-        System.out.println(builder.substring(m.start(),m.end()));
-
-        p = Pattern.compile("(--\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w)\\nContent-Type: text\\/html; charset=\"UTF-8");
-        m = p.matcher(builder);
-        m.find();
-        int start = m.start();
 
 
-        p = Pattern.compile("(--\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w\\w)\\nContent-Type: text\\/plain; charset=\"UTF-8");
-        m = p.matcher(builder);
-        m.find();
-        int end = m.end();
-
-        System.out.print(builder.substring(end,start));
-
+    public void setA(String a) {
+        this.a = a;
     }
 
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
 }
