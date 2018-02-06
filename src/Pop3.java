@@ -23,7 +23,7 @@ public class Pop3
         //System.out.print("Enter pop3 server :");
 
        // connectAndRetreiveEmail(bri.readLine());
-        connectAndRetreiveEmail("pop.mail.com");
+        connectAndRetreiveEmail("pop.mail.ru");
     }
 
 
@@ -31,7 +31,7 @@ public class Pop3
     private void connectAndRetreiveEmail(String strPOP3Server) throws Exception
     {      SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();
             s =null;
-            s = (SSLSocket) ssf.createSocket("pop.mail.ru",995);
+            s = (SSLSocket) ssf.createSocket(strPOP3Server,995);
          builder = new StringBuilder();
         br=new BufferedReader(new InputStreamReader(s.getInputStream()));
         bw=new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
@@ -66,7 +66,7 @@ public class Pop3
                         if(temp1.equals("3"))
                         {
                             quit();
-                            break;
+                            //break;
                         }
                         else
                         if(temp1.equals("4"))
@@ -135,6 +135,7 @@ public class Pop3
         }
         else
             System.out.println(temp);
+
     }
 
     private void showList() throws Exception
@@ -150,7 +151,7 @@ public class Pop3
             System.out.println(temp);
             temp=br.readLine();
         }
-        System.out.println(temp);
+       //System.out.println(temp);
 
     }
 
@@ -185,7 +186,7 @@ public class Pop3
     private void quit() throws Exception
     {
         System.out.println("Quiting and saving changes to Inbox ....");
-        bw.write("quit\n\r");
+        bw.write("uidl 3\n\r");
         bw.flush();
         System.out.println(br.readLine());
     }
