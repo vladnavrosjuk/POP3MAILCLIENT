@@ -97,6 +97,28 @@ public class Controller {
                 {}
             }
         });
+        vies.getQuitUidl().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    pop3.uidl(vies.getNumberPageUidl().getText());
+                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
+                }
+                catch (Exception e1)
+                {}
+            }
+        });
+        vies.getTopButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    pop3.top(vies.getStrTop().getText(),vies.getStrTop2().getText());
+                    vies.getjTextArea().setText( pop3.getServerText() + "\n");
+                }
+                catch (Exception e1)
+                {}
+            }
+        });
 
     }
 }

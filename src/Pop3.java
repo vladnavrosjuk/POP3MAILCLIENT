@@ -69,6 +69,7 @@ public class Pop3 {
             System.out.println("U have given invalid message no.");
         } else
             System.out.println(temp);
+
     }
 
     public void showList() throws Exception {
@@ -78,7 +79,7 @@ public class Pop3 {
         temp = br.readLine();
         while (!temp.equals(".")) {
             ServerText = ServerText + "S:" + temp + "\n";
-            System.out.println(temp);
+
             temp = br.readLine();
         }
     }
@@ -109,6 +110,12 @@ public class Pop3 {
         bw.flush();
         ServerText = ServerText + "S:" + br.readLine();
     }
+    public void uidl(String a) throws Exception {
+        bw.write("uidl "+a+"\n\r");
+        ServerText = "C:" + "UIDL" + a + "\n";
+        bw.flush();
+        ServerText = ServerText + "S:" + br.readLine();
+    }
 
     public void stat() throws Exception {
         bw.write("stat\n\r");
@@ -122,6 +129,14 @@ public class Pop3 {
         ServerText = "C:" + "NOOP" + "\n";
         bw.flush();
         ServerText = ServerText + "S:" + br.readLine();
+    }
+
+    public void top(String a, String b) throws Exception {
+        bw.write("top "+a+" " + b + "\n\r");
+        ServerText = "C:" + "top"+a+" " + b + "\n";
+        bw.flush();
+        ServerText = ServerText + "S:" + br.readLine();
+
     }
 
 
