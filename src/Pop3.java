@@ -34,13 +34,13 @@ public class Pop3 {
         String temp1 = "";
         ServerText = "S:" + br.readLine() + "\n";
 
-        authenticate();
+        //authenticate();
     }
 
 
-    private boolean authenticate() throws Exception {
+    public boolean authenticate() throws Exception {
         bw.write("User " + user + "\n\r");
-        ServerText = ServerText + "C:" + "User " + user + "\n";
+        ServerText = "C:" + "User " + user + "\n";
         bw.flush();
         ServerText = ServerText + "S:" + br.readLine() + "\n";
         bw.write("Pass " + pass + "\n\r");
@@ -62,6 +62,18 @@ public class Pop3 {
     public void delEmail(String a) throws Exception {
         ServerText = "C:" + "DELE" + a + "\n";
         bw.write("dele " + a + "\n\r");
+        bw.flush();
+        temp = br.readLine();
+        ServerText = ServerText + "S:" + temp + "\n";
+        if (temp.substring(0, 4).equals("-ERR")) {
+            System.out.println("U have given invalid message no.");
+        } else
+            System.out.println(temp);
+
+    }
+    public void apop() throws Exception {
+        ServerText = "C:" + "apop " + "testaipos@mail.ru" +" e2b2ce866203c6d3753b07f5725500a9" + "\n";
+        bw.write("apop " + "testaipos@mail.ru" +" e2b2ce866203c6d3753b07f5725500a9" + "\n\r");
         bw.flush();
         temp = br.readLine();
         ServerText = ServerText + "S:" + temp + "\n";
@@ -109,12 +121,33 @@ public class Pop3 {
         ServerText = "C:" + "QUIT" + "\n";
         bw.flush();
         ServerText = ServerText + "S:" + br.readLine();
+        s.close();
     }
     public void uidl(String a) throws Exception {
         bw.write("uidl "+a+"\n\r");
         ServerText = "C:" + "UIDL" + a + "\n";
         bw.flush();
-        ServerText = ServerText + "S:" + br.readLine();
+        temp = br.readLine();
+        if (temp.substring(0,4).equals("-ERR"))
+            ServerText = ServerText + temp + "\n";
+        else {
+            if (a.equals("")){
+            while (!temp.equals(".")) {
+                temp = br.readLine();
+                ServerText = ServerText + temp + "\n";
+
+
+            }}
+            if (!a.equals(""))
+            {
+                ServerText = ServerText + temp + "\n";
+            }
+
+
+
+        }
+
+
     }
 
     public void stat() throws Exception {
@@ -132,10 +165,23 @@ public class Pop3 {
     }
 
     public void top(String a, String b) throws Exception {
-        bw.write("top "+a+" " + b + "\n\r");
+        bw.write("top "+a+" "+b+"\n\r");
         ServerText = "C:" + "top"+a+" " + b + "\n";
         bw.flush();
-        ServerText = ServerText + "S:" + br.readLine();
+        temp = br.readLine();
+        if (temp.substring(0,4).equals("-ERR"))
+            ServerText = ServerText + temp + "\n";
+        else {
+        while (!temp.equals(".")) {
+            temp = br.readLine();
+            ServerText = ServerText + temp + "\n";
+
+
+        }}
+        System.out.println(ServerText);
+
+      //  ServerText = ServerText + "S:" + temp;
+
 
     }
 

@@ -21,10 +21,9 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    pop3.setUser(vies.getEnterYourLogin().getText());
-                    pop3.setPass(vies.getEnterYourPassword().getText());
+
                     pop3.connectAndRetreiveEmail(vies.getEnterNameServer().getText());
-                    vies.getjTextArea().setText(pop3.getServerText());
+                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
 
                 }
                 catch (Exception e1)
@@ -36,8 +35,7 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 try {
                     pop3.delEmail(vies.getNumberPageDelete().getText());
-                    vies.getjTextArea().setText(pop3.getServerText());
-                }
+                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");                }
                 catch (Exception e1)
                 {}
             }
@@ -47,7 +45,7 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 try {
                     pop3.quit();
-                    vies.getjTextArea().setText(pop3.getServerText());
+                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
                 }
                 catch (Exception e1){}
             }
@@ -57,7 +55,7 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 try{
                     pop3.displayEmail(vies.getNumberPage().getText());
-                    vies.getjTextArea().setText(pop3.getServerText());
+                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
                 }
                 catch (Exception e1)
                 {}
@@ -68,7 +66,7 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 try {
                     pop3.showList();
-                    vies.getjTextArea().setText(pop3.getServerText());
+                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
                 }
                 catch (Exception e1)
                 {}
@@ -80,7 +78,7 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 try {
                     pop3.stat();
-                    vies.getjTextArea().setText(pop3.getServerText());
+                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
                 }
                 catch (Exception e1)
                 {}
@@ -113,12 +111,27 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 try {
                     pop3.top(vies.getStrTop().getText(),vies.getStrTop2().getText());
-                    vies.getjTextArea().setText( pop3.getServerText() + "\n");
+                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
                 }
                 catch (Exception e1)
                 {}
             }
         });
+
+        vies.getAuthorizathionButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    pop3.setUser(vies.getEnterYourLogin().getText());
+                    pop3.setPass(vies.getEnterYourPassword().getText());
+                    pop3.authenticate();
+                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
+                }
+                catch (Exception e1)
+                {}
+            }
+        });
+
 
     }
 }

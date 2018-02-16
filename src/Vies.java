@@ -1,4 +1,8 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 /**
  * Created by Владислав on 07.02.2018.
@@ -9,12 +13,17 @@ public class Vies
     JFrame frame2;
     JTextField enterNameServer,enterYourPassword,enterYourLogin, numberPage,numberPageDelete,numberPageUidl,strTop,strTop2;
     JTextArea jTextArea;
-    JButton button,displayemail,button2,deleteButton,quitButton,listButton,statButton,noopButton,quitUidl,topButton;
+    JButton button,displayemail,button2,deleteButton,quitButton,listButton,statButton,noopButton,quitUidl,topButton,authorizathionButton;
     public Vies()
-    {
+    {   JPanel jPanel = new JPanel();
+        jPanel.setBackground(Color.black);
+        jPanel.setBounds(250   ,10,500,700);
+        Button buttonredi =new Button();
+
         frame =  new JFrame();
+        frame.getContentPane().setBackground(Color.black);
         frame.setLayout(null);
-        frame.setSize(600,750);
+        frame.setSize(800,730);
         enterNameServer = new JTextField("pop.mail.ru");
         enterNameServer.setBounds(10,10,200,40);
         frame.add(enterNameServer);
@@ -23,10 +32,17 @@ public class Vies
         frame.add(enterYourLogin);
         enterYourPassword = new JTextField("kolb2018");
         enterYourPassword.setBounds(10,110,200,40);
+        enterYourPassword.setBackground(Color.black);
+
         frame.add(enterYourPassword);
         button = new JButton("Connect");
         button.setBounds(10,160,100,50);
+        buttonredi.createButtin(button);
         frame.add(button);
+        authorizathionButton = new JButton("Autoriz");
+        authorizathionButton.setBounds(120,160,100,50);
+        frame.add(authorizathionButton);
+
         numberPage = new JTextField();
         numberPage.setBounds(120,300,50,50);
         frame.add(numberPage);
@@ -66,15 +82,53 @@ public class Vies
         frame.add(topButton);
         noopButton = new JButton("NOOP");
         noopButton.setBounds(120,640,100,50);
+        noopButton.setBackground(Color.black);
+
+        buttonredi.createButtin(button2);
+        buttonredi.createButtin(deleteButton);
+        buttonredi.createButtin(quitButton);
+        buttonredi.createButtin(listButton);
+        buttonredi.createButtin(statButton);
+        buttonredi.createButtin(noopButton);
+        buttonredi.createButtin(quitUidl);
+        buttonredi.createButtin(topButton);
+        buttonredi.createButtin(authorizathionButton);
+        buttonredi.createButtin(authorizathionButton);
+       buttonredi.createButtin(noopButton);
         frame.add(noopButton);
 
 
 
-        jTextArea = new JTextArea();
-        jTextArea.setBounds(250,10,300,500);
-        frame.add(jTextArea);
+        jTextArea  = new JTextArea(40,43);
+        jTextArea.setBackground(Color.black);
+        jTextArea.setDisabledTextColor(Color.red);
+        Color color = new Color(16, 189, 0);
+      //  enterNameServer,enterYourPassword,enterYourLogin, numberPage,numberPageDelete,numberPageUidl,strTop,strTop2
+
+        buttonredi.createText(enterNameServer);
+        buttonredi.createText(enterYourPassword);
+        buttonredi.createText(enterYourLogin);
+        buttonredi.createText(numberPage);
+        buttonredi.createText(numberPageDelete);
+        buttonredi.createText(numberPageUidl);
+        buttonredi.createText(strTop);
+        buttonredi.createText(strTop2);
+
+        jTextArea.setForeground(color);
+        //jTextArea.setEditable(false);
+         JScrollPane    scroll = new JScrollPane(jTextArea);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setBorder(new EmptyBorder(0,0,0,0));
+        jPanel.add(scroll);
+        jPanel.setForeground(Color.red);
+        jPanel.setBorder(new TitledBorder(new EtchedBorder(), "TERMINAL"));
+
+
+
+        frame.add(jPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
+
 
 
 
@@ -118,6 +172,10 @@ public class Vies
 
     public JButton getButton2() {
         return button2;
+    }
+
+    public JButton getAuthorizathionButton() {
+        return authorizathionButton;
     }
 
     public JTextField getNumberPage() {
