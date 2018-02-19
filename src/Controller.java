@@ -1,137 +1,57 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 /**
  * Created by Владислав on 07.02.2018.
  */
 public class Controller {
-    Vies vies;
+
     Pop3 pop3;
 
-    public Controller(Vies vies, Pop3 pop3) throws  Exception {
-        this.vies = vies;
+    public Controller(Pop3 pop3) throws Exception {
+
         this.pop3 = pop3;
-        listener();
-
-    }
-
-    public void listener() throws Exception
-    {
-        vies.getButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-
-                    pop3.connectAndRetreiveEmail(vies.getEnterNameServer().getText());
-                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
-
-                }
-                catch (Exception e1)
-                {}
-            }
-        });
-        vies.getDeleteButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    pop3.delEmail(vies.getNumberPageDelete().getText());
-                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");                }
-                catch (Exception e1)
-                {}
-            }
-        });
-        vies.getQuitButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    pop3.quit();
-                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
-                }
-                catch (Exception e1){}
-            }
-        });
-        vies.getButton2().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try{
-                    pop3.displayEmail(vies.getNumberPage().getText());
-                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
-                }
-                catch (Exception e1)
-                {}
-            }
-        });
-        vies.getListButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    pop3.showList();
-                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
-                }
-                catch (Exception e1)
-                {}
-            }
-        });
-
-        vies.getStatButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    pop3.stat();
-                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
-                }
-                catch (Exception e1)
-                {}
-            }
-        });
-        vies.getNoopButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    pop3.noop();
-                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
-                }
-                catch (Exception e1)
-                {}
-            }
-        });
-        vies.getQuitUidl().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    pop3.uidl(vies.getNumberPageUidl().getText());
-                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
-                }
-                catch (Exception e1)
-                {}
-            }
-        });
-        vies.getTopButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    pop3.top(vies.getStrTop().getText(),vies.getStrTop2().getText());
-                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
-                }
-                catch (Exception e1)
-                {}
-            }
-        });
-
-        vies.getAuthorizathionButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    pop3.setUser(vies.getEnterYourLogin().getText());
-                    pop3.setPass(vies.getEnterYourPassword().getText());
-                    pop3.authenticate();
-                    vies.getjTextArea().setText(vies.getjTextArea().getText() + pop3.getServerText() + "\n");
-                }
-                catch (Exception e1)
-                {}
-            }
-        });
 
 
     }
+
+    public String authorization(String login, String password) throws Exception {
+        return pop3.authenticate(login, password);
+    }
+
+    public String connect(String text) throws Exception {
+        return pop3.connectAndRetreiveEmail(text);
+
+    }
+
+    public String showlist() throws Exception {
+        return pop3.showList();
+    }
+
+    public String stat() throws Exception {
+        return pop3.stat();
+    }
+
+    public String uidl(String string) throws Exception {
+        return pop3.uidl(string);
+    }
+
+    public String noop() throws Exception {
+        return pop3.noop();
+    }
+
+    public String displayemail(String a) throws Exception {
+        return pop3.displayEmail(a);
+    }
+
+    public String delete(String a) throws Exception {
+        return pop3.delEmail(a);
+    }
+
+    public String quit() throws Exception {
+        return pop3.quit();
+    }
+
+    public String top(String a, String b) throws Exception {
+        return pop3.top(a, b);
+    }
+
+
 }

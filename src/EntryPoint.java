@@ -3,9 +3,9 @@
  */
 public class EntryPoint {
     public static void main(String[] args) throws  Exception {
-        Vies vies = new Vies();
         Pop3 pop3 = new Pop3();
+        Controller controller = new Controller(pop3);
+        Vies vies = new Vies(controller);
 
-        Controller controller = new Controller(vies,pop3);
     }
 }

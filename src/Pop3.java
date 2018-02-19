@@ -24,7 +24,7 @@ public class Pop3 {
     }
 
 
-    public void connectAndRetreiveEmail(String strPOP3Server) throws Exception {
+    public String connectAndRetreiveEmail(String strPOP3Server) throws Exception {
         SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();
         s = null;
         s = (SSLSocket) ssf.createSocket(strPOP3Server, 995);
@@ -32,13 +32,13 @@ public class Pop3 {
         br = new BufferedReader(new InputStreamReader(s.getInputStream()));
         bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
         String temp1 = "";
-        ServerText = "S:" + br.readLine() + "\n";
+        return "S:" + br.readLine() + "\n";
 
         //authenticate();
     }
 
 
-    public boolean authenticate() throws Exception {
+    public String authenticate(String user, String pass) throws Exception {
         bw.write("User " + user + "\n\r");
         ServerText = "C:" + "User " + user + "\n";
         bw.flush();
@@ -50,41 +50,28 @@ public class Pop3 {
         temp = br.readLine();
         ServerText = ServerText + "S:" + temp + "\n";
         if (temp.substring(0, 4).equals("-ERR")) {
-            System.out.println("UserName or Password invalid");
-            return false;
+            ServerText = "Eror";
+            return ServerText;
+
         } else {
-            System.out.println(temp);
-            return true;
+            return ServerText;
         }
+
 
     }
 
-    public void delEmail(String a) throws Exception {
+    public String delEmail(String a) throws Exception {
         ServerText = "C:" + "DELE" + a + "\n";
         bw.write("dele " + a + "\n\r");
         bw.flush();
         temp = br.readLine();
-        ServerText = ServerText + "S:" + temp + "\n";
-        if (temp.substring(0, 4).equals("-ERR")) {
-            System.out.println("U have given invalid message no.");
-        } else
-            System.out.println(temp);
+        return ServerText + "S:" + temp + "\n";
 
-    }
-    public void apop() throws Exception {
-        ServerText = "C:" + "apop " + "testaipos@mail.ru" +" e2b2ce866203c6d3753b07f5725500a9" + "\n";
-        bw.write("apop " + "testaipos@mail.ru" +" e2b2ce866203c6d3753b07f5725500a9" + "\n\r");
-        bw.flush();
-        temp = br.readLine();
-        ServerText = ServerText + "S:" + temp + "\n";
-        if (temp.substring(0, 4).equals("-ERR")) {
-            System.out.println("U have given invalid message no.");
-        } else
-            System.out.println(temp);
 
     }
 
-    public void showList() throws Exception {
+
+    public String showList() throws Exception {
         ServerText = "C:" + "List" + "\n";
         bw.write("List\n\r");
         bw.flush();
@@ -94,9 +81,10 @@ public class Pop3 {
 
             temp = br.readLine();
         }
+        return ServerText;
     }
 
-    public void displayEmail(String a) throws Exception {
+    public String displayEmail(String a) throws Exception {
         bw.write("RETR " + a + "\n\r");
         ServerText = "C:" + "RETR" + a + "\n";
         bw.flush();
@@ -114,73 +102,78 @@ public class Pop3 {
             ServerText = ServerText + parser.getA();
             builder.setLength(0);
         }
+        return ServerText;
     }
 
-    public void quit() throws Exception {
+    public String quit() throws Exception {
         bw.write("quit\n\r");
         ServerText = "C:" + "QUIT" + "\n";
         bw.flush();
         ServerText = ServerText + "S:" + br.readLine();
         s.close();
+        return ServerText;
     }
-    public void uidl(String a) throws Exception {
-        bw.write("uidl "+a+"\n\r");
+
+    public String uidl(String a) throws Exception {
+        bw.write("uidl " + a + "\n\r");
         ServerText = "C:" + "UIDL" + a + "\n";
         bw.flush();
         temp = br.readLine();
-        if (temp.substring(0,4).equals("-ERR"))
+        if (temp.substring(0, 4).equals("-ERR"))
             ServerText = ServerText + temp + "\n";
         else {
-            if (a.equals("")){
+            if (a.equals("")) {
+                while (!temp.equals(".")) {
+                    temp = br.readLine();
+                    ServerText = ServerText + temp + "\n";
+
+
+                }
+            }
+            if (!a.equals("")) {
+                ServerText = ServerText + temp + "\n";
+            }
+
+
+        }
+        return ServerText;
+
+
+    }
+
+    public String stat() throws Exception {
+        bw.write("stat\n\r");
+        ServerText = "C:" + "stat" + "\n";
+        bw.flush();
+        return ServerText = ServerText + "S:" + br.readLine();
+    }
+
+    public String noop() throws Exception {
+        bw.write("noop\n\r");
+        ServerText = "C:" + "NOOP" + "\n";
+        bw.flush();
+        return ServerText = ServerText + "S:" + br.readLine();
+    }
+
+    public String top(String a, String b) throws Exception {
+        bw.write("top " + a + " " + b + "\n\r");
+        ServerText = "C:" + "top" + a + " " + b + "\n";
+        bw.flush();
+        temp = br.readLine();
+        if (temp.substring(0, 4).equals("-ERR"))
+            ServerText = ServerText + temp + "\n";
+        else {
             while (!temp.equals(".")) {
                 temp = br.readLine();
                 ServerText = ServerText + temp + "\n";
 
 
-            }}
-            if (!a.equals(""))
-            {
-                ServerText = ServerText + temp + "\n";
             }
-
-
-
         }
+        //System.out.println(ServerText);
+        return ServerText;
 
-
-    }
-
-    public void stat() throws Exception {
-        bw.write("stat\n\r");
-        ServerText = "C:" + "stat" + "\n";
-        bw.flush();
-        ServerText = ServerText + "S:" + br.readLine();
-    }
-
-    public void noop() throws Exception {
-        bw.write("noop\n\r");
-        ServerText = "C:" + "NOOP" + "\n";
-        bw.flush();
-        ServerText = ServerText + "S:" + br.readLine();
-    }
-
-    public void top(String a, String b) throws Exception {
-        bw.write("top "+a+" "+b+"\n\r");
-        ServerText = "C:" + "top"+a+" " + b + "\n";
-        bw.flush();
-        temp = br.readLine();
-        if (temp.substring(0,4).equals("-ERR"))
-            ServerText = ServerText + temp + "\n";
-        else {
-        while (!temp.equals(".")) {
-            temp = br.readLine();
-            ServerText = ServerText + temp + "\n";
-
-
-        }}
-        System.out.println(ServerText);
-
-      //  ServerText = ServerText + "S:" + temp;
+        //  ServerText = ServerText + "S:" + temp;
 
 
     }
