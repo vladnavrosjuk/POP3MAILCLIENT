@@ -244,6 +244,7 @@ public class Vies {
                     jTextArea.setText(jTextArea.getText() + connect + "\n");
                 } catch (Exception e1) {
                     jTextArea.setText("Eror in noop");
+                    System.out.println("");
                 }
 
 
