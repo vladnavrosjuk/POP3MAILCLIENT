@@ -1,3 +1,7 @@
+package Pop3;
+
+import Control.Parser;
+
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
@@ -19,7 +23,7 @@ public class Pop3 {
     String temp = "";
     BufferedReader bri = new BufferedReader(new InputStreamReader(System.in));
 
-    Pop3() throws Exception {
+    public Pop3() throws Exception {
 
     }
 

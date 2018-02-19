@@ -1,3 +1,5 @@
+package Control;
+import Pop3.Pop3;
 /**
  * Created by Владислав on 07.02.2018.
  */

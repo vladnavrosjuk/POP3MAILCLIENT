@@ -1,3 +1,7 @@
+package View;
+
+import Control.Controller;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -21,7 +25,17 @@ public class Vies {
     JTextField strTop;
     JTextField strTop2;
     JTextArea jTextArea;
-    JButton button, displayemail, button2, deleteButton, quitButton, listButton, statButton, noopButton, quitUidl, topButton, authorizathionButton;
+    JButton button;
+    JButton displayemail;
+    JButton deleteButton;
+    JButton button2;
+    JButton listButton;
+    JButton quitButton;
+    JButton noopButton;
+    JButton statButton;
+    JButton quitUidl;
+    JButton topButton;
+    JButton  authorizathionButton;
     private Controller controller;
     Button buttonredi = new Button();
 
@@ -131,6 +145,8 @@ public class Vies {
         createJButton();
         createTextField();
     }
+
+
 
     public void createJButton() {
         buttonredi.createButtin(button2);
@@ -277,12 +293,15 @@ public class Vies {
                 try {
                     String connect = controller.quit();
                     jTextArea.setText(jTextArea.getText() + connect + "\n");
+                   /* Thread.sleep(10000);
+                    System.exit(0);*/
 
                 } catch (Exception e1) {
                     jTextArea.setText("Eror in quit");
                 }
             }
         });
+
     }
 
 

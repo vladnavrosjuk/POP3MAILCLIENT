@@ -1,3 +1,5 @@
+package Control;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,7 +86,6 @@ public class Parser {
         m.find();
         int end = m.end() + 1;
         a = a + builder.substring(end,start)+ "\n";
-
 
         // return (builder.substring(end,start));
     }
