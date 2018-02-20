@@ -1,4 +1,4 @@
-package View;
+package Lab.Aipos1.Pop3.View;
 
 import javax.swing.*;
 import java.awt.*;

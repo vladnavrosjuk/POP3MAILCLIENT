@@ -1,6 +1,6 @@
-package View;
+package Lab.Aipos1.Pop3.View;
 
-import Control.Controller;
+import Lab.Aipos1.Pop3.Control.Controller;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -121,8 +121,6 @@ public class Vies {
         noopButton = new JButton("NOOP");
         noopButton.setBounds(120, 640, 100, 50);
         noopButton.setBackground(Color.black);
-
-
         frame.add(noopButton);
 
 
